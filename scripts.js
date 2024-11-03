@@ -8,20 +8,31 @@ document.getElementById('submitButton').addEventListener('click', async function
 
     try {
         // Simulate POST requests to fetch data for charts and analysis
-        const response1 = await fetch('https://example.com/api/analyze1', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ emailData: emailInput })
-        });
-        const response2 = await fetch('https://example.com/api/analyze2', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ emailData: emailInput })
-        });
+        // const response1 = await fetch('https://example.com/api/analyze1', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ emailData: emailInput })
+        // });
+        // const response2 = await fetch('https://example.com/api/analyze2', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ emailData: emailInput })
+        // });
 
-        const data1 = await response1.json();
-        const data2 = await response2.json();
+        // const data1 = await response1.json();
+        // const data2 = await response2.json();
 
+        const data1 = {
+            labels: ['Sender', 'Recipient', 'Subject Analysis', 'Attachments', 'Spam Score'],
+            values: [5, 10, 7, 3, 8],
+            summary: 'This is a summary of test analysis data.'
+        };
+
+        const data2 = {
+            labels: ['Sender', 'Recipient', 'Subject Analysis', 'Attachments', 'Spam Score'],
+            values: [54, 150, 37, 23, 48],
+            summary: 'This is a summary of test analysis data.'
+        };
         // Fill the charts
         createChart('chart1', data1.labels, data1.values, 'Analysis Chart 1');
         createChart('chart2', data2.labels, data2.values, 'Analysis Chart 2');
