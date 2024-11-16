@@ -1,72 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DNS Dumpster Results</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Forensics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h2>Host Information</h2>
-    <ul id="host-list"></ul>
+    <div class="container">
+        <h1>Email Forensics Dashboard</h1>
+        <textarea id="emailInput" placeholder="Paste raw email text here"></textarea>
+        <button id="submitButton">Analyze</button>
+        
 
-    <script>
-        // Define your API key and domain to search
-        const apiKey = 'a5cbdf3353973fe0809466658be41c6092659d4c8dbe37b253fbbbfdfb377df5';
-        const domain = 'example.com';
+        <div>
+            <label>Sender: <span id="senderLabel"></span></label><br>
+            <label>Receiver: <span id="receiverLabel"></span></label><br>
+            <label>Date Sent: <span id="dateSentLabel"></span></label><br>
+            <label>Date Received: <span id="dateReceivedLabel"></span></label><br>
+        </div>
 
-        // Fetch data from the API
-        async function fetchDnsData() {
-            try {
-                const response = await fetch(`https://api.dnsdumpster.com/domain/${domain}`, {
-                    headers: {
-                        'X-API-Key': apiKey,
-                        'mode':'no-cors'
-                    }
-                });
+        <div id="location-info" class="location-info">
+            <!-- The content will be dynamically inserted here by JavaScript -->
+          </div>
+    
+        <h3>DMARC, DKIM, ARC, SPF Results</h3>
+        <table id="checksTable" style="display:none;">
+            <tr>
+                <th>Check</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>DMARC</td>
+                <td id="dmarcStatus"></td>
+            </tr>
+            <tr>
+                <td>DKIM</td>
+                <td id="dkimStatus"></td>
+            </tr>
+            <tr>
+                <td>ARC</td>
+                <td id="arcStatus"></td>
+            </tr>
+            <tr>
+                <td>SPF</td>
+                <td id="spfStatus"></td>
+            </tr>
+        </table>
+    
+        <h3>Attachments</h3>
+        <div id="attachmentInfo" style="display:none;">
+            <p>Attachment Filename: <span id="attachmentFileName"></span></p>
+        </div>
+    
+        <h3>Email Body</h3>
+        <div id="emailBody" style="display:none;">
+            <p id="bodyText"></p>
+        </div>
+        <label id="spamResultLabel"></label>
 
-                // Check if the response is okay
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status} ${response.statusText}`);
-                }
+        <h2 id="resultHeading" style="display: none;">Blacklist Check Results</h2>
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="resultTableBody"></tbody>
+        </table>
 
-                // Parse JSON response
-                const data = await response.json();
-                displayResults(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-
-        // Display the first few hosts from the API response
-        function displayResults(data) {
-            const hostList = document.getElementById('host-list');
-            hostList.innerHTML = ''; // Clear existing data
-
-            // Extract A records (hosts) and display the first few
-            const hosts = data.a || [];
-            hosts.slice(0, 5).forEach((hostRecord) => {
-                const hostItem = document.createElement('li');
-                const ipInfo = hostRecord.ips[0];
-                
-                hostItem.textContent = `Host: ${hostRecord.host}, IP: ${ipInfo.ip}, Country: ${ipInfo.country}, ASN: ${ipInfo.asn_name}`;
-                
-                hostList.appendChild(hostItem);
-            });
-
-            // Extract NS records (name servers) and display the first few
-            const nsRecords = data.ns || [];
-            nsRecords.slice(0, 5).forEach((nsRecord) => {
-                const nsItem = document.createElement('li');
-                const ipInfo = nsRecord.ips[0];
-
-                nsItem.textContent = `NS Host: ${nsRecord.host}, IP: ${ipInfo.ip}, Country: ${ipInfo.country}, ASN: ${ipInfo.asn_name}`;
-                
-                hostList.appendChild(nsItem);
-            });
-        }
-
-        // Call the function to fetch data
-        fetchDnsData();
-    </script>
+        <div class="chart-container">
+            <canvas id="chart1"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="chart2"></canvas>
+        </div>
+        <div id="results"></div>
+    </div>
+    <script src="scripts.js"></script>
 </body>
 </html>
