@@ -13,6 +13,66 @@
         <h1>Email Forensics Dashboard</h1>
         <textarea id="emailInput" placeholder="Paste raw email text here"></textarea>
         <button id="submitButton">Analyze</button>
+        
+
+        <div>
+            <label>Sender: <span id="senderLabel"></span></label><br>
+            <label>Receiver: <span id="receiverLabel"></span></label><br>
+            <label>Date Sent: <span id="dateSentLabel"></span></label><br>
+            <label>Date Received: <span id="dateReceivedLabel"></span></label><br>
+        </div>
+
+        <div id="location-info" class="location-info">
+            <!-- The content will be dynamically inserted here by JavaScript -->
+          </div>
+    
+        <h3>DMARC, DKIM, ARC, SPF Results</h3>
+        <table id="checksTable" style="display:none;">
+            <tr>
+                <th>Check</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>DMARC</td>
+                <td id="dmarcStatus"></td>
+            </tr>
+            <tr>
+                <td>DKIM</td>
+                <td id="dkimStatus"></td>
+            </tr>
+            <tr>
+                <td>ARC</td>
+                <td id="arcStatus"></td>
+            </tr>
+            <tr>
+                <td>SPF</td>
+                <td id="spfStatus"></td>
+            </tr>
+        </table>
+    
+        <h3>Attachments</h3>
+        <div id="attachmentInfo" style="display:none;">
+            <p>Attachment Filename: <span id="attachmentFileName"></span></p>
+        </div>
+    
+        <h3>Email Body</h3>
+        <div id="emailBody" style="display:none;">
+            <p id="bodyText"></p>
+        </div>
+        <label id="spamResultLabel"></label>
+
+        <h2 id="resultHeading" style="display: none;">Blacklist Check Results</h2>
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="resultTableBody"></tbody>
+        </table>
+
         <div class="chart-container">
             <canvas id="chart1"></canvas>
         </div>

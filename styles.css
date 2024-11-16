@@ -47,3 +47,48 @@ button:hover {
 canvas {
     max-width: 100%;
 }
+
+
+#resultTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: none; /* Initially hidden */
+}
+#resultTable th, #resultTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+#resultTable th {
+    background-color: #f2f2f2;
+}
+.status-pass {
+    color: green;
+    font-weight: bold;
+}
+.status-fail {
+    color: red;
+    font-weight: bold;
+}
+
+.location-info {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.flag-img {
+    width: 64px;
+    height: auto;
+    margin-top: 10px;
+}
