@@ -19,7 +19,8 @@
             try {
                 const response = await fetch(`https://api.dnsdumpster.com/domain/${domain}`, {
                     headers: {
-                        'X-API-Key': apiKey
+                        'X-API-Key': apiKey,
+                        mode:'no-cors'
                     }
                 });
 
